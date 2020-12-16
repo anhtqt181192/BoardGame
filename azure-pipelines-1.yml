@@ -15,3 +15,16 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: WindowsMachineFileCopy@2
+  inputs:
+    SourcePath: 'source'
+    MachineNames: 'test'
+    AdminUserName: 'admin'
+    AdminPassword: '123123'
+    TargetPath: 'test'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
